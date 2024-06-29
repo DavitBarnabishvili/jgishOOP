@@ -1,13 +1,10 @@
 package Tests;
 
 import Core.Domain.Entities.User;
-import Core.Infrastructure.Infrastructure.UserRepository;
+import Core.Infrastructure.Infrastructure.User.UserRepository;
 import junit.framework.TestCase;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -15,9 +12,9 @@ public class RepositoryTest extends TestCase {
     private UserRepository userRepository;
     private User testUser;
 
-    @Before
-    public void setUp() throws SQLException, NoSuchAlgorithmException {
-        userRepository = new UserRepository();
+
+    public void setUp() throws NoSuchAlgorithmException {
+        userRepository = UserRepository.getInstance();
         testUser = new User();
         testUser.setId(1);
         testUser.setPassword("guramiko777");
@@ -25,7 +22,6 @@ public class RepositoryTest extends TestCase {
         testUser.setPictureUrl("Pictures/default_profile_picture.jpg");
     }
 
-    @Test
     public void testFindByIdAsync() throws InterruptedException, ExecutionException {
         // Call the method being tested
         Future<User> futureUser = userRepository.findByIdAsync(1);

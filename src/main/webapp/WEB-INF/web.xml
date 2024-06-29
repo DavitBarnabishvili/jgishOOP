@@ -4,4 +4,7 @@
 
 <web-app>
   <display-name>Archetype Created Web Core.Application</display-name>
+  <listener>
+    <listener-class>Core.Infrastructure.ApplicationContextListener</listener-class>
+  </listener>
 </web-app>

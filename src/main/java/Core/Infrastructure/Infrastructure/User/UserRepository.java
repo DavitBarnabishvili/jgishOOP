@@ -1,6 +1,7 @@
-package Core.Infrastructure.Infrastructure;
+package Core.Infrastructure.Infrastructure.User;
 
 import Core.Domain.Entities.User;
+import Core.Infrastructure.Infrastructure.BaseRepository;
 import Core.Infrastructure.Persistence.DbConnection;
 
 import java.security.NoSuchAlgorithmException;
@@ -10,8 +11,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.CompletableFuture;
 
-public class UserRepository extends BaseRepository<User> {
+public class UserRepository extends BaseRepository<User> implements IUserRepository{
+    private UserRepository(){}
+    private static final UserRepository INSTANCE = new UserRepository();
 
+    public static UserRepository getInstance() {
+        return INSTANCE;
+    }
     @Override
     protected String getTableName() {
         return "users";
@@ -27,6 +33,7 @@ public class UserRepository extends BaseRepository<User> {
         return user;
     }
 
+    @Override
     public CompletableFuture<User> findByIdAsync(int id) {
         return CompletableFuture.supplyAsync(() -> {
             User user = null;
@@ -56,6 +63,7 @@ public class UserRepository extends BaseRepository<User> {
         });
     }
 
+    @Override
     public CompletableFuture<Void> createAsync(User user) {
         return CompletableFuture.runAsync(() -> {
             Connection connection = null;
@@ -78,6 +86,7 @@ public class UserRepository extends BaseRepository<User> {
         });
     }
 
+    @Override
     public CompletableFuture<Void> updateAsync(User user) {
         return CompletableFuture.runAsync(() -> {
             Connection connection = null;
@@ -101,6 +110,7 @@ public class UserRepository extends BaseRepository<User> {
         });
     }
 
+    @Override
     public CompletableFuture<Void> deleteByIdAsync(int id) {
         return CompletableFuture.runAsync(() -> {
             Connection connection = null;
