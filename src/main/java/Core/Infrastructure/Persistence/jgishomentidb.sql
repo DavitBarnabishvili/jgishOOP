@@ -65,8 +65,13 @@ CREATE TABLE user_achievements(
 	user_id 		int, -- foreign key
 	achievement_id 		int,
 	FOREIGN KEY (user_id) REFERENCES users(user_id),
-    	FOREIGN KEY (achievement_id) REFERENCES achievement_desc(achievement_id)
+    FOREIGN KEY (achievement_id) REFERENCES achievement_desc(achievement_id)
 );
 
--- TODO: ADD FRIENDS
-
+CREATE TABLE friends(
+    user_id         int,
+    friend_id       int,
+    -- Constraints
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (friend_id) REFERENCES users(user_id),
+)
